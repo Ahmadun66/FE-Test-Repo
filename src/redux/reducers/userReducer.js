@@ -1,9 +1,9 @@
-import { USER_REGISTER_SUCCESS, USER_LOGIN_SUCCESS, USER_PROFILE_SUCCESS } from '../actions/types';
+import { USER_REGISTER_SUCCESS, USER_LOGIN_SUCCESS, USER_PROFILE_SUCCESS, ERROR } from '../actions/types';
 
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
-  user: null
+  user: null, 
 };
 
 const userReducer = (state = initialState, action) => {
@@ -23,6 +23,13 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: payload
       };
+
+    case ERROR: 
+      return {
+        ...state, 
+        isAuthenticated: false
+      }
+      
     default:
       return state;
   }

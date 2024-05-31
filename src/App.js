@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Sidebar from './component/Sidebar';
 import Profile from './component/Profile';
-import Product from './component/Product';
+import Product from './component/Product/Product';
 import Login from './component/Login';
 import Registration from './component/Registration';
+import AddProduct from './component/Product/AddProduct';
+import EditProduct from './component/Product/EditProduct';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
                     <Routes>
                       <Route index path="/profile" element={<Profile />} />
                       <Route path="/product" element={<Product />} />
+                      <Route path="/addproduct" element={<AddProduct />} />
+                      <Route path="/editproduct/:id" element={<EditProduct />} />
                     </Routes>
                   </div>
                 </div>

@@ -1,21 +1,29 @@
-import axios from 'axios';
-import { USER_REGISTER_SUCCESS, USER_LOGIN_SUCCESS, USER_PROFILE_SUCCESS } from './types';
+
+import { USER_REGISTER_SUCCESS, USER_LOGIN_SUCCESS, USER_PROFILE_SUCCESS, ERROR} from './types';
+import axiosBase from '../../api/axiosBase';
+
+
 
 export const registerUser = (userData) => async (dispatch) => {
   try {
-    const res = await axios.post('/api/users/register', userData);
+    const res = await axiosBase.post('/users/register', userData);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: res.data });
+    return { success: true, data: res.data }; // Return success response
   } catch (err) {
-    console.error(err.response.data);
+     dispatch({ type: ERROR, payload: err.response.data.msg });
+     return { success: false, error: err.response.data.msg }; // Return error response
   }
 };
 
 export const loginUser = (userData) => async (dispatch) => {
   try {
-    const res = await axios.post('/api/users/login', userData);
+    const res = await axiosBase.post('/users/login', userData);
+    console.log(res)
     dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data });
+    return { success: true, data: res.data }; // Return success response
   } catch (err) {
-    console.error(err.response.data);
+    console.log(err)
+    return { success: false, error: err.response.data.msg }; // Return error response
   }
 };
 
@@ -29,9 +37,12 @@ export const getUserProfile = () => async (dispatch, getState) => {
   };
 
   try {
-    const res = await axios.get('/api/users/profile', config);
+    const res = await axiosBase.get('/users/profile', config);    
     dispatch({ type: USER_PROFILE_SUCCESS, payload: res.data });
+
   } catch (err) {
-    console.error(err.response.data);
+
+    dispatch({ type: ERROR, payload: err.response.data.msg});
+    
   }
 };
